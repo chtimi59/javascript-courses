@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>NodeJS</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="nodejs"><a class="header-link" href="#nodejs"></a>NodeJS</h1>
+<p>nodeJS allows to run javascript without browser</p>
+<p>npm is the package manager of NodeJs</p>
+<p>npm &gt;3.10.8 (should comes with nodeJS &gt;6.9.1)</p>
+<ul class="list">
+<li><a href="https://nodejs.org/en/">https://nodejs.org/en/</a></li>
+<li><a href="https://www.npmjs.com/package/cli">https://www.npmjs.com/package/cli</a></li>
+</ul>
+<h1 id="do-it-by-'hand'"><a class="header-link" href="#do-it-by-'hand'"></a>Do it by &#39;hand&#39;</h1>
+<pre class="hljs"><code>&gt; node src\app.js
+Bonjour !
+Bye <span class="hljs-built_in">bye</span> !
+&lt;p&gt;Un paragraphe en &lt;strong&gt;markdown&lt;/strong&gt; !&lt;/p&gt;
+Hello world!</code></pre><h1 id="initiate-a-*package.json*"><a class="header-link" href="#initiate-a-*package.json*"></a>Initiate a <em>package.json</em></h1>
+<pre class="hljs"><code>npm init</code></pre><h1 id="add-new-package"><a class="header-link" href="#add-new-package"></a>Add new package</h1>
+<pre class="hljs"><code>npm install -S markdown
+npm install -D markdown <span class="hljs-comment">#for dev only</span>
+npm install markdown -g <span class="hljs-comment">#for global install</span></code></pre><h1 id="package-update"><a class="header-link" href="#package-update"></a>Package update</h1>
+<pre class="hljs"><code>npm update</code></pre><h1 id="install-packages"><a class="header-link" href="#install-packages"></a>Install packages</h1>
+<p>When you only provides a <em>package.json</em>, then <em>/node_module</em> is empty, so user needs to write:</p>
+<pre class="hljs"><code>npm install</code></pre><h1 id="visual-code-ide"><a class="header-link" href="#visual-code-ide"></a>Visual Code IDE</h1>
+<p>Use Visual Studio Code for editing/compilation/debug</p>
+<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<pre class="hljs"><code>code .</code></pre><ul class="list">
+<li>Click on app.js</li>
+<li>hit F5</li>
+</ul>
+    </article>
+  </body>
+</html>
