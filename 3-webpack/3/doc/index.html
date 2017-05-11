@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>WebPack by using *webpack.config.js*</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="webpack-by-using-*webpack.config.js*"><a class="header-link" href="#webpack-by-using-*webpack.config.js*"></a>WebPack by using <em>webpack.config.js</em></h1>
+<p>webpack.config.js contains:</p>
+<pre class="hljs"><code><span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Hello!"</span>);
+
+<span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+<span class="hljs-built_in">console</span>.log(path.resolve(__dirname, <span class="hljs-string">'build'</span>));
+
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">entry</span>: [ <span class="hljs-string">'./app/index.js'</span> ],
+  <span class="hljs-attr">output</span>: {
+    <span class="hljs-attr">filename</span>: <span class="hljs-string">'bundle.js'</span>,
+    <span class="hljs-attr">path</span>: path.resolve(__dirname, <span class="hljs-string">'build'</span>)
+  }
+};</code></pre><p>so after updating <em>package.json</em>:</p>
+<pre class="hljs"><code>  <span class="hljs-string">"scripts"</span>: {
+    <span class="hljs-string">"build"</span>: <span class="hljs-string">"webpack -d --devtool source-map"</span>,
+    <span class="hljs-string">"clean"</span>: <span class="hljs-string">"rimraf build/{css/*,js/*,images/*}"</span>
+  },</code></pre><p>we now simply do:</p>
+<pre class="hljs"><code>npm <span class="hljs-keyword">run</span><span class="bash"> install
+</span>npm <span class="hljs-keyword">run</span><span class="bash"> build
+</span>npm <span class="hljs-keyword">run</span><span class="bash"> start</span></code></pre><h1 id="visual-code-ide"><a class="header-link" href="#visual-code-ide"></a>Visual Code IDE</h1>
+<p>Use Visual Studio Code for editing/compilation/debug</p>
+<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<pre class="hljs"><code>code .</code></pre><p>You need to install:
+<a href="https://code.visualstudio.com/blogs/2016/02/23/introducing-chrome-debugger-for-vs-code">Chrome debug install</a></p>
+<ul class="list">
+<li>Compile with Ctrl+Shift+B (this is a watch operation, so one time is enough)</li>
+<li>hit F5</li>
+</ul>
+    </article>
+  </body>
+</html>

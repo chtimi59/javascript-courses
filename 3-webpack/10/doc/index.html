@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Production/Development</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="production/development"><a class="header-link" href="#production/development"></a>Production/Development</h1>
+<p>Let&#39;s clean the build process a little</p>
+<h1 id="split-webpack.config.js-in-serverals-files"><a class="header-link" href="#split-webpack.config.js-in-serverals-files"></a>Split webpack.config.js in serverals files</h1>
+<p>Our <em>webpack.config.js</em> mays look this:</p>
+<pre class="hljs"><code><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">env</span>) </span>{
+   <span class="hljs-keyword">return</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">`./.webpack/<span class="hljs-subst">${env}</span>.js`</span>).conf;
+}</code></pre><p>hence our <em>package.json</em> mays look like this:</p>
+<pre class="hljs"><code>  <span class="hljs-string">"scripts"</span>: {
+    <span class="hljs-attr">"build:dev"</span>: <span class="hljs-string">"webpack --env=dev --progress --profile --colors"</span>,
+    <span class="hljs-attr">"build:prod"</span>: <span class="hljs-string">"webpack --env=prod --progress --profile --colors"</span>,
+    <span class="hljs-attr">"clean"</span>: <span class="hljs-string">"rimraf dist/{css/*,js/*,images/*}"</span>
+  }</code></pre><p>that&#39;s brings us <em>.webpack/dev.js</em> and <em>.webpack/prod.js</em></p>
+<p>here is how dev (for development) mays looks:</p>
+<pre class="hljs"><code><span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Development Mode"</span>);
+
+<span class="hljs-keyword">const</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">'webpack-merge'</span>);
+<span class="hljs-keyword">const</span> com = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./common.js'</span>);
+exports.conf = merge(com.conf, {
+
+  <span class="hljs-attr">devtool</span>: <span class="hljs-string">'source-map'</span>, 
+
+  <span class="hljs-attr">plugins</span>: [
+
+      <span class="hljs-comment">/* webpack option */</span>    
+      <span class="hljs-keyword">new</span> webpack.LoaderOptionsPlugin({
+        <span class="hljs-attr">minimize</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">debug</span>: <span class="hljs-literal">true</span>
+      }),
+
+    ]  
+});</code></pre><p>which brings to have a <em>.webpack/common.js</em>
+which may look like this:</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> Path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+exports.root_path = path.resolve(__dirname, <span class="hljs-string">'../'</span>);
+exports.src_path = exports.root_path +  <span class="hljs-string">'/src'</span>;
+exports.out_path = exports.root_path +  <span class="hljs-string">'/dist'</span>;
+exports.conf = {
+
+    <span class="hljs-attr">entry</span>: {
+        <span class="hljs-attr">bundle</span>: exports.src_path + <span class="hljs-string">'/index.js'</span>,
+    },
+
+    <span class="hljs-attr">output</span>: {
+        <span class="hljs-attr">filename</span>: <span class="hljs-string">'[name].js'</span>,
+        <span class="hljs-attr">path</span>: exports.out_path
+    },
+
+}</code></pre><p>You can notice the usage of <strong>webpack-merge</strong> which helps to merge configuration.</p>
+<h1 id="defining-globals-in-your-js-code"><a class="header-link" href="#defining-globals-in-your-js-code"></a>Defining globals in your js code</h1>
+<p>By using <strong>DefinePlugin</strong> you can replace pattern in your js sources, hence with this,</p>
+<pre class="hljs"><code>plugins: [
+
+      <span class="hljs-keyword">new</span> webpack.DefinePlugin({
+           <span class="hljs-attr">__PROD__</span>: <span class="hljs-built_in">JSON</span>.stringify(<span class="hljs-literal">false</span>),
+           <span class="hljs-attr">__VERSION__</span>: <span class="hljs-built_in">JSON</span>.stringify(<span class="hljs-string">'1.0.2'</span>),
+      })
+]</code></pre><p>you can write this:</p>
+<pre class="hljs"><code><span class="hljs-keyword">if</span> (!__PROD__) {
+   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'This app is version '</span> + __VERSION__);
+}</code></pre><p><em>Note: it should be a good idea to extract these information from package.json</em></p>
+    </article>
+  </body>
+</html>

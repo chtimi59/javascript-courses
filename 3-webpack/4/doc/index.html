@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>WebPack &quot;import/require&quot; interpretation</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="webpack-"import/require"-interpretation"><a class="header-link" href="#webpack-"import/require"-interpretation"></a>WebPack &quot;import/require&quot; interpretation</h1>
+<p>note: <strong>import</strong> is actually new in ECMA script 6, but allowed as we use WebPack build process</p>
+<p><em>index.js</em> contains:</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> <span class="hljs-string">'./file.js'</span>;</code></pre><p><em>file.js</em> contains:</p>
+<pre class="hljs"><code><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hello'</span>);</code></pre><p>so <em>bundle.js</em> will contains:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">module, exports</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hello'</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">module, __webpack_exports__, __webpack_require__</span>) </span>{
+<span class="hljs-meta">     "use strict"</span>;
+     <span class="hljs-built_in">Object</span>.defineProperty(__webpack_exports__, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+     <span class="hljs-comment">/* harmony import */</span> <span class="hljs-keyword">var</span> __WEBPACK_IMPORTED_MODULE_0__file_js__ = __webpack_require__(<span class="hljs-comment">/*! ./file.js */</span> <span class="hljs-number">0</span>);
+     <span class="hljs-comment">/* harmony import */</span> <span class="hljs-keyword">var</span> __WEBPACK_IMPORTED_MODULE_0__file_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__file_js__);
+}</code></pre><p>hence after</p>
+<pre class="hljs"><code>npm <span class="hljs-keyword">run</span><span class="bash"> install
+</span>npm <span class="hljs-keyword">run</span><span class="bash"> build
+</span>npm <span class="hljs-keyword">run</span><span class="bash"> start</span></code></pre><p>loading <a href="http://localhost:8080">http://localhost:8080</a> will shows &#39;hello&#39; in the console</p>
+<h2 id="fixing-path"><a class="header-link" href="#fixing-path"></a>fixing path</h2>
+<p>if <em>index.js</em> use the following line (no &#39;./&#39;):</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> <span class="hljs-string">'file.js'</span>;</code></pre><p>The we need to specify resolving path by adding the following line in your webpconfig.js:</p>
+<pre class="hljs"><code>resolve: {
+    <span class="hljs-attr">modules</span>: [
+        path.join(__dirname, <span class="hljs-string">"node_modules"</span>),
+        path.join(__dirname, <span class="hljs-string">"src"</span>),
+    ]
+}</code></pre>    </article>
+  </body>
+</html>

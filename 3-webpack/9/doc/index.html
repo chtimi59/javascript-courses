@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Code Splitting</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="code-splitting"><a class="header-link" href="#code-splitting"></a>Code Splitting</h1>
+<p>Code splitting is one of the most compelling features of webpack. It allows you to split your code into various bundles which you can then load on demand — like when a user navigates to a matching route, or on an event from the user. This allows for smaller bundles, and allows you to control resource load prioritization, which if used correctly, can have a major impact on your application load time.</p>
+<h1 id="css-splitting"><a class="header-link" href="#css-splitting"></a>CSS splitting</h1>
+<p>This kind of splitting is independent from application logic. The some usage of is to avoid <a href="https://en.wikipedia.org/wiki/Flash_of_unstyled_content">FOUC</a> effect. What we are doing here is to extract text from Webpack chunk with the <strong>ExtractTextWebpackPlugin</strong></p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> <span class="hljs-string">'style.css'</span>;</code></pre><pre class="hljs"><code><span class="hljs-keyword">const</span> ExtractTextPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">"extract-text-webpack-plugin"</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+
+ <span class="hljs-attr">module</span>: {
+     <span class="hljs-attr">rules</span>: [     
+       {
+            <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,
+            <span class="hljs-attr">use</span>: ExtractTextPlugin.extract({
+              <span class="hljs-attr">fallback</span>: <span class="hljs-string">"style-loader"</span>,
+              <span class="hljs-attr">use</span>: <span class="hljs-string">"raw-loader"</span>,
+            })
+        }
+    ]
+  },
+
+  <span class="hljs-comment">/* global plugins */</span>
+  plugins: [
+        <span class="hljs-keyword">new</span> ExtractTextPlugin(<span class="hljs-string">'bundle.css'</span>)
+  ]    
+}</code></pre><p>At the end we get a bundle.css file</p>
+<h1 id="vendor-code-splitting"><a class="header-link" href="#vendor-code-splitting"></a>Vendor code splitting</h1>
+<p>A typical application can depend on many third party libraries for framework/functionality needs. Unlike application code, code present in these libraries does not change often. If we keep code from these libraries in its own bundle, separate from the application code, we can leverage the browser&#39;s caching mechanism to cache these files for longer durations on the end user&#39;s machine.</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span>(<span class="hljs-string">'./mylib'</span>);
+<span class="hljs-keyword">import</span> moment <span class="hljs-keyword">from</span> <span class="hljs-string">'moment'</span>;
+myPrint(moment().format());</code></pre><pre class="hljs"><code>entry: {
+    <span class="hljs-attr">bundle</span>: <span class="hljs-string">'./src/index.js'</span>,
+    <span class="hljs-attr">thirdparties</span>: [<span class="hljs-string">'lodash'</span>, <span class="hljs-string">'moment'</span>], <span class="hljs-comment">/* commontly nammed 'vendor' */</span>
+    otherThings: <span class="hljs-string">'./src/mylib.js'</span>,
+  },
+
+  <span class="hljs-attr">output</span>: {
+      <span class="hljs-attr">filename</span>: <span class="hljs-string">'[name].js'</span>,
+      <span class="hljs-attr">path</span>: path.resolve(__dirname, <span class="hljs-string">'dist'</span>)
+  },</code></pre><p>At the end we get a bundle.js, a thirdparties.js and a otherThings.js</p>
+<p>Note: here bundle.js contains common code with thirdparties.js and a otherThings.js, this where <strong>CommonsChunkPlugin</strong>
+can help to filter out(extract) the common code.</p>
+<p><a href="https://webpack.js.org/guides/code-splitting-libraries/">https://webpack.js.org/guides/code-splitting-libraries/</a> to see how to fine tune your webpack.config.js</p>
+<p>One other way is to exclude some library from webpack management</p>
+<pre class="hljs"><code> <span class="hljs-comment">/* exclude somes files */</span>
+  externals: {
+        <span class="hljs-string">"moment"</span>: <span class="hljs-string">"moment"</span>
+  },</code></pre><h1 id="on-demand-code-splitting"><a class="header-link" href="#on-demand-code-splitting"></a>On demand code-splitting</h1>
+<p>split your bundle into chunks which can be downloaded asynchronously at a later time. For instance, this allows to serve a minimal bootstrap bundle first and to asynchronously additional features later.</p>
+<p>webpack supports two similar techniques to achieve this goal: using import() (preferred, ECMAScript proposal) and require.ensure() (legacy, webpack specific).</p>
+<p>example:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">determineDate</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">import</span>(<span class="hljs-string">'moment'</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">moment</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(moment().format());
+  }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed to load moment'</span>, err);
+  });
+}
+
+determineDate();</code></pre><p><a href="https://webpack.js.org/guides/code-splitting-async/">https://webpack.js.org/guides/code-splitting-async/</a></p>
+    </article>
+  </body>
+</html>

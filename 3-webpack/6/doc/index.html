@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>WebPack queuing loaders</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="webpack-queuing-loaders"><a class="header-link" href="#webpack-queuing-loaders"></a>WebPack queuing loaders</h1>
+<p><em>comment-loader.js</em></p>
+<pre class="hljs"><code><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source</span>) </span>{
+  <span class="hljs-keyword">var</span> str = <span class="hljs-string">"/*"</span> + source + <span class="hljs-string">"*/"</span>;
+  <span class="hljs-keyword">return</span> str;
+};</code></pre><p><em>encapsulate-loader.js</em></p>
+<pre class="hljs"><code><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'/*IN*/'</span>+source+<span class="hljs-string">'/*OUT*/'</span>;
+};</code></pre><p><em>Index.js</em>:
+Notice that this time we use a txt file</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> <span class="hljs-string">'encapsulate-loader.js./comment-loader.js!./file.txt'</span>;</code></pre><p>So now bundle.js look like this:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">module, exports</span>) </span>{
+
+<span class="hljs-comment">/*IN*/</span><span class="hljs-comment">/*Hello world !*/</span><span class="hljs-comment">/*OUT*/</span>
+
+<span class="hljs-comment">/***/</span> }</code></pre>    </article>
+  </body>
+</html>

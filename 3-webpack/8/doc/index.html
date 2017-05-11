@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>WebPack classical loaders...</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="webpack-classical-loaders..."><a class="header-link" href="#webpack-classical-loaders..."></a>WebPack classical loaders...</h1>
+<h2 id="'raw-loader'"><a class="header-link" href="#'raw-loader'"></a>&#39;raw-loader&#39;</h2>
+<p>Transform a file content into a string</p>
+<pre class="hljs"><code> <span class="hljs-built_in">module</span>: {
+    <span class="hljs-attr">rules</span>: [      
+            {
+              <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.txt$/</span>,
+              <span class="hljs-attr">use</span>: [<span class="hljs-string">'raw-loader'</span>]
+            }
+    ]
+  }</code></pre><p><em>Index.js</em>:</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> tst <span class="hljs-keyword">from</span> <span class="hljs-string">'./file.txt'</span>;
+<span class="hljs-built_in">console</span>.log(tst); <span class="hljs-comment">// show "Hello World"</span></code></pre><p><em>bundle.js will look like this</em>:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">module, exports</span>) </span>{
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-string">"Hello World"</span>
+
+}</code></pre><h2 id="'style-loader'"><a class="header-link" href="#'style-loader'"></a>&#39;style-loader&#39;</h2>
+<p>Adds CSS to the DOM by injecting a <code>&lt;style&gt;</code> tag</p>
+<pre class="hljs"><code> <span class="hljs-built_in">module</span>: {
+    <span class="hljs-attr">rules</span>: [      
+            {
+              <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,
+              <span class="hljs-attr">use</span>: [<span class="hljs-string">'style-loader'</span>,
+                    <span class="hljs-string">'raw-loader'</span>]
+            }
+    ]
+  }</code></pre><p><em>Index.js</em>:</p>
+<pre class="hljs"><code><span class="hljs-built_in">require</span>(<span class="hljs-string">'./style.css'</span>);
+<span class="hljs-comment">//or import './style.css';</span></code></pre><h2 id="'file-loader'"><a class="header-link" href="#'file-loader'"></a>&#39;file-loader&#39;</h2>
+<p>By default the filename of the resulting file is the MD5 hash of the file&#39;s contents with the original extension of the required resource.</p>
+<pre class="hljs"><code> <span class="hljs-built_in">module</span>: {
+    <span class="hljs-attr">rules</span>: [      
+            {
+              <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.(ico|jpe?g|png|gif)$/</span>,
+              <span class="hljs-attr">use</span>: [<span class="hljs-string">'file-loader'</span>]
+            }
+    ]
+  }</code></pre><p><em>Index.js</em>:</p>
+<pre class="hljs"><code><span class="hljs-keyword">var</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./image.png"</span>); <span class="hljs-comment">// returns 7418fc9aeda031834ff42d149d7efd75.png</span></code></pre><p>copy image.png to ./build/7418fc9aeda031834ff42d149d7efd75.png</p>
+    </article>
+  </body>
+</html>

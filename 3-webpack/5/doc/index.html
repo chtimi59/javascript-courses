@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>WebPack loaders</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="webpack-loaders"><a class="header-link" href="#webpack-loaders"></a>WebPack loaders</h1>
+<p>Loaders are transformations that are applied on the source code of a module. They allow you to preprocess files as you require() or “load” them. Thus, loaders are kind of like “tasks” in other build tools, and provide a powerful way to handle front-end build steps. Loaders can transform files from a different language (like TypeScript) to JavaScript, or inline images as data URLs. Loaders even allow you to do things like require() CSS files right in your JavaScript!</p>
+<p>A loader is a node module exporting a function.</p>
+<p>This function is called when a resource should be transformed by this loader.</p>
+<p>Example: <em>comment-loader.js</em> to comment out &#39;source&#39;</p>
+<pre class="hljs"><code><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source</span>) </span>{
+  <span class="hljs-keyword">var</span> str = <span class="hljs-string">"/*"</span> + source + <span class="hljs-string">"*/"</span>;
+  <span class="hljs-keyword">return</span> str;
+};</code></pre><p>index.js:</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> <span class="hljs-string">'./comment-loader.js!./file.js'</span>;</code></pre><p>so now bundle.js look like this:</p>
+<pre class="hljs"><code><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">module, exports</span>) </span>{
+
+<span class="hljs-comment">/*console.log('hello');*/</span>
+
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">module, __webpack_exports__, __webpack_require__</span>) </span>{
+<span class="hljs-meta">  "use strict"</span>;
+  <span class="hljs-built_in">Object</span>.defineProperty(__webpack_exports__, <span class="hljs-string">"__esModule"</span>, { <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span> });
+  <span class="hljs-comment">/* harmony import */</span> <span class="hljs-keyword">var</span> __WEBPACK_IMPORTED_MODULE_0__comment_loader_js_file_js__ = __webpack_require__(<span class="hljs-comment">/*! ./comment-loader.js!./file.js */</span> <span class="hljs-number">0</span>);
+  <span class="hljs-comment">/* harmony import */</span> <span class="hljs-keyword">var</span> __WEBPACK_IMPORTED_MODULE_0__comment_loader_js_file_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__comment_loader_js_file_js__);
+}</code></pre>    </article>
+  </body>
+</html>

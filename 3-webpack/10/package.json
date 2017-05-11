@@ -1,0 +1,24 @@
+{
+  "name": "webpack-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -p 8080",
+    "build:dev": "webpack --env=dev --progress --profile --colors",
+    "build:prod": "webpack --env=prod --progress --profile --colors",
+    "clean": "rimraf dist/{css/*,js/*,images/*}"
+  },
+  "devDependencies": {
+    "http-server": "^0.10.0",
+    "rimraf": "^2.5.4",
+    "webpack": "^2.4.1",
+    "webpack-merge": "^4.1.0",
+    "css-loader": "^0.28.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "raw-loader": "^0.5.1",    
+    "style-loader": "^0.16.1"    
+  },
+  "dependencies": {
+    "moment": "^2.18.1"
+  }
+}

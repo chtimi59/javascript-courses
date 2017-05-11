@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title>webpack 2 demo</title>
+    <!-- removed from webpack chunk -->
+    <script src="node_modules/moment/min/moment.min.js"></script>
+    <!-- separated chunk -->
+    <link rel="stylesheet" type="text/css" href="build/bundle.css">
+  </head>
+  <body> 
+    <!-- normal chunk -->
+    <script src="build/bundle.js"></script>
+  </body>
+</html>

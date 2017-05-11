@@ -1,0 +1,16 @@
+{  
+  "scripts": {
+    "start": "http-server -p 8080",
+    "build": "webpack -d --devtool source-map",
+    "clean": "rimraf dist/{css/*,js/*,images/*}"
+  },
+  "devDependencies": {
+    "http-server": "^0.10.0",
+    "rimraf": "^2.5.4",
+    "webpack": "^2.4.1",
+    "css-loader": "^0.28.0",
+    "file-loader": "^0.11.1",
+    "raw-loader": "^0.5.1",
+    "style-loader": "^0.16.1"
+  }
+}
