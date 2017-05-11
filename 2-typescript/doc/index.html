@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>TypeScript</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h1 id="typescript"><a class="header-link" href="#typescript"></a>TypeScript</h1>
+<p><a href="https://www.typescriptlang.org/">https://www.typescriptlang.org/</a></p>
+<p>The goal is to makes js a full language with typing/class/abstract, independant of ECMAScript version.</p>
+<p>This allow to cover past and future release of ECMAScript.</p>
+<p>Install:</p>
+<pre class="hljs"><code>npm i -g typescript</code></pre><h1 id="do-it-by-'hand'"><a class="header-link" href="#do-it-by-'hand'"></a>Do it by &#39;hand&#39;</h1>
+<pre class="hljs"><code>tsc src/app.ts
+node src/app.js</code></pre><h1 id="initiate-a-*tsconfig.json*"><a class="header-link" href="#initiate-a-*tsconfig.json*"></a>Initiate a <em>tsconfig.json</em></h1>
+<pre class="hljs"><code>tsc -init</code></pre><p>Example:</p>
+<pre class="hljs"><code>{
+    <span class="hljs-attr">"compilerOptions"</span>: {
+        <span class="hljs-attr">"module"</span>: <span class="hljs-string">"commonjs"</span>,
+        <span class="hljs-attr">"target"</span>: <span class="hljs-string">"es5"</span>,
+        <span class="hljs-attr">"noImplicitAny"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"sourceMap"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"outDir"</span>: <span class="hljs-string">"./dist"</span>
+    },
+    <span class="hljs-attr">"include"</span>: [
+        <span class="hljs-string">"./src/**/*"</span>
+    ]
+}</code></pre><p>Result:</p>
+<pre class="hljs"><code>&gt; tsc
+&gt; node dist/app.js
+[ { name: <span class="hljs-string">'Joe'</span>, age: 42 } ]
+end</code></pre><h1 id="visual-code-ide"><a class="header-link" href="#visual-code-ide"></a>Visual Code IDE</h1>
+<p>Use Visual Studio Code for editing/compilation/debug</p>
+<p><a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<pre class="hljs"><code>code .</code></pre><ul class="list">
+<li>Compile with Ctrl+Shift+B (this is a watch operation, so one time is enough)</li>
+<li>hit F5</li>
+</ul>
+    </article>
+  </body>
+</html>
