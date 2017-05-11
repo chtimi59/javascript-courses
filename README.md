@@ -1,12 +1,12 @@
-# javascript courses support
-A list of javascript samples to step by step dig into modern (2017) web frontend technologies
+# Javascript courses support
+A list of javascript samples to step by step to dig into modern (2017) web frontend technologies
 
 Note: In these courses the term "compilation" is used, even if we can't talk properly here about software-compilation, it's more a generic to talk about general build process
 
 - 1-Nodejs/npm
     - [starter](https://github.com/chtimi59/javascript-courses/blob/master/1-nodejs/1)
 - 2-Typescript
-    - [start](https://github.com/chtimi59/javascript-courses/blob/master/2-typescript/1)
+    - [starter](https://github.com/chtimi59/javascript-courses/blob/master/2-typescript/1)
 - 3-Webpack
     - [Why WebPack ?](https://github.com/chtimi59/javascript-courses/blob/master/3-webpack/1)
     - [First use of WebPack](https://github.com/chtimi59/javascript-courses/blob/master/3-webpack/2)
