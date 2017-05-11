@@ -3,17 +3,97 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <title>Boiler-Plate</title>
+    <title>First Boiler-Plate</title>
     <link type="text/css" rel="stylesheet" href="assets/css/github-markdown.css">
     <link type="text/css" rel="stylesheet" href="assets/css/pilcrow.css">
     <link type="text/css" rel="stylesheet" href="assets/css/hljs-github.min.css"/>
   </head>
   <body>
-    <article class="markdown-body"><h1 id="boiler-plate"><a class="header-link" href="#boiler-plate"></a>Boiler-Plate</h1>
+    <article class="markdown-body"><h1 id="first-boiler-plate"><a class="header-link" href="#first-boiler-plate"></a>First Boiler-Plate</h1>
+<p>Here we integrate:</p>
 <ul class="list">
 <li>typescript</li>
 <li>sass</li>
 </ul>
-    </article>
+<p>WebPack configuration used:
+(note that <code>moment</code> is used as example)</p>
+<pre class="hljs"><code>const path = require('path');
+const ExtractTextPlugin = require(<span class="hljs-string">"extract-text-webpack-plugin"</span>);
+
+exports.root_path = path.resolve(__dirname, '../');
+exports.src_path = exports.root_path +  '/src';
+exports.out_path = exports.root_path +  '/build';
+exports.npmPackage = require(exports.root_path+'/package.json');
+exports.npmModules = exports.root_path +  '/node_modules';
+
+exports.conf = {
+
+    entry: {
+        bundle: exports.src_path + '/index.ts',
+    },
+
+    output: {
+        filename: '[name].js',
+        path: exports.out_path
+    },
+
+    externals: {
+        <span class="hljs-attr">"moment"</span>: <span class="hljs-string">"moment"</span>
+    },
+
+    module: {
+       rules: [
+
+            {
+              // All files with a '.ts' or '.tsx' extension
+              // will be handled by ts-loader (TODO: check benefit of 'awesome-typescript-loader')
+              test: /\.tsx?$/,
+              loaders: ['ts-loader']
+            },
+            { 
+                // All output '.js' files will have any sourcemaps
+                // re-processed by 'source-map-loader'.
+                test: /\.js$/,
+                loaders: ['source-map-loader'],
+                enforce: <span class="hljs-string">"pre"</span>
+            },            
+            {
+                 // .css
+                 test: /\.css$/,
+                 loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader']
+                 })
+            },
+            {
+                 // .scss
+                 test: /\.s[ac]ss$/,
+                 loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'sass-loader']
+                 })
+            },
+            {
+                 // image
+                 test: /\.(ico|jpe?g|png|gif)$/,
+                 use: ['file-loader']
+            },
+            {
+                 //text file
+                 test: /\.txt$/,
+                 use: ['raw-loader']
+            },
+
+        ]
+    },
+
+    resolve: {      
+      extensions: [<span class="hljs-string">".js"</span>, <span class="hljs-string">".ts"</span>]
+    },
+
+    plugins: [
+       new ExtractTextPlugin('bundle.css')
+    ]
+}</code></pre>    </article>
   </body>
 </html>
