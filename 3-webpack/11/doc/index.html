@@ -17,82 +17,83 @@
 </ul>
 <p>WebPack configuration used:
 (note that <code>moment</code> is used as example)</p>
-<pre class="hljs"><code>const path = require('path');
-const ExtractTextPlugin = require(<span class="hljs-string">"extract-text-webpack-plugin"</span>);
+<pre class="hljs"><code>
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> ExtractTextPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">"extract-text-webpack-plugin"</span>);
 
-exports.root_path = path.resolve(__dirname, '../');
-exports.src_path = exports.root_path +  '/src';
-exports.out_path = exports.root_path +  '/build';
-exports.npmPackage = require(exports.root_path+'/package.json');
-exports.npmModules = exports.root_path +  '/node_modules';
+exports.root_path = path.resolve(__dirname, <span class="hljs-string">'../'</span>);
+exports.src_path = exports.root_path +  <span class="hljs-string">'/src'</span>;
+exports.out_path = exports.root_path +  <span class="hljs-string">'/build'</span>;
+exports.npmPackage = <span class="hljs-built_in">require</span>(exports.root_path+<span class="hljs-string">'/package.json'</span>);
+exports.npmModules = exports.root_path +  <span class="hljs-string">'/node_modules'</span>;
 
 exports.conf = {
 
-    entry: {
-        bundle: exports.src_path + '/index.ts',
+    <span class="hljs-attr">entry</span>: {
+        <span class="hljs-attr">bundle</span>: exports.src_path + <span class="hljs-string">'/index.ts'</span>,
     },
 
-    output: {
-        filename: '[name].js',
-        path: exports.out_path
+    <span class="hljs-attr">output</span>: {
+        <span class="hljs-attr">filename</span>: <span class="hljs-string">'[name].js'</span>,
+        <span class="hljs-attr">path</span>: exports.out_path
     },
 
-    externals: {
-        <span class="hljs-attr">"moment"</span>: <span class="hljs-string">"moment"</span>
+    <span class="hljs-attr">externals</span>: {
+        <span class="hljs-string">"moment"</span>: <span class="hljs-string">"moment"</span>
     },
 
-    module: {
-       rules: [
+    <span class="hljs-attr">module</span>: {
+       <span class="hljs-attr">rules</span>: [
 
             {
-              // All files with a '.ts' or '.tsx' extension
-              // will be handled by ts-loader (TODO: check benefit of 'awesome-typescript-loader')
-              test: /\.tsx?$/,
-              loaders: ['ts-loader']
+              <span class="hljs-comment">// All files with a '.ts' or '.tsx' extension</span>
+              <span class="hljs-comment">// will be handled by ts-loader (<span class="hljs-doctag">TODO:</span> check benefit of 'awesome-typescript-loader')</span>
+              test: <span class="hljs-regexp">/\.tsx?$/</span>,
+              <span class="hljs-attr">loaders</span>: [<span class="hljs-string">'ts-loader'</span>]
             },
             { 
-                // All output '.js' files will have any sourcemaps
-                // re-processed by 'source-map-loader'.
-                test: /\.js$/,
-                loaders: ['source-map-loader'],
-                enforce: <span class="hljs-string">"pre"</span>
+                <span class="hljs-comment">// All output '.js' files will have any sourcemaps</span>
+                <span class="hljs-comment">// re-processed by 'source-map-loader'.</span>
+                test: <span class="hljs-regexp">/\.js$/</span>,
+                <span class="hljs-attr">loaders</span>: [<span class="hljs-string">'source-map-loader'</span>],
+                <span class="hljs-attr">enforce</span>: <span class="hljs-string">"pre"</span>
             },            
             {
-                 // .css
-                 test: /\.css$/,
-                 loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader']
+                 <span class="hljs-comment">// .css</span>
+                 test: <span class="hljs-regexp">/\.css$/</span>,
+                 <span class="hljs-attr">loader</span>: ExtractTextPlugin.extract({
+                    <span class="hljs-attr">fallback</span>: <span class="hljs-string">'style-loader'</span>,
+                    <span class="hljs-attr">use</span>: [<span class="hljs-string">'css-loader'</span>]
                  })
             },
             {
-                 // .scss
-                 test: /\.s[ac]ss$/,
-                 loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader', 'sass-loader']
+                 <span class="hljs-comment">// .scss</span>
+                 test: <span class="hljs-regexp">/\.s[ac]ss$/</span>,
+                 <span class="hljs-attr">loader</span>: ExtractTextPlugin.extract({
+                    <span class="hljs-attr">fallback</span>: <span class="hljs-string">'style-loader'</span>,
+                    <span class="hljs-attr">use</span>: [<span class="hljs-string">'css-loader'</span>, <span class="hljs-string">'sass-loader'</span>]
                  })
             },
             {
-                 // image
-                 test: /\.(ico|jpe?g|png|gif)$/,
-                 use: ['file-loader']
+                 <span class="hljs-comment">// image</span>
+                 test: <span class="hljs-regexp">/\.(ico|jpe?g|png|gif)$/</span>,
+                 <span class="hljs-attr">use</span>: [<span class="hljs-string">'file-loader'</span>]
             },
             {
-                 //text file
-                 test: /\.txt$/,
-                 use: ['raw-loader']
+                 <span class="hljs-comment">//text file</span>
+                 test: <span class="hljs-regexp">/\.txt$/</span>,
+                 <span class="hljs-attr">use</span>: [<span class="hljs-string">'raw-loader'</span>]
             },
 
         ]
     },
 
-    resolve: {      
-      extensions: [<span class="hljs-string">".js"</span>, <span class="hljs-string">".ts"</span>]
+    <span class="hljs-attr">resolve</span>: {      
+      <span class="hljs-attr">extensions</span>: [<span class="hljs-string">".js"</span>, <span class="hljs-string">".ts"</span>]
     },
 
-    plugins: [
-       new ExtractTextPlugin('bundle.css')
+    <span class="hljs-attr">plugins</span>: [
+       <span class="hljs-keyword">new</span> ExtractTextPlugin(<span class="hljs-string">'bundle.css'</span>)
     ]
 }</code></pre>    </article>
   </body>
