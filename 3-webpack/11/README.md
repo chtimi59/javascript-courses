@@ -8,6 +8,7 @@ Here we integrate:
 WebPack configuration used:
 (note that ```moment``` is used as example)
 ```json
+{
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
