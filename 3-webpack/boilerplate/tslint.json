@@ -1,0 +1,15 @@
+{
+  "rules": {
+    "no-consecutive-blank-lines": [
+      true
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  /* paths */
+  "src_path": "src",
+  "out_path": "build",  
+  /* dev server */
+  "use_hmr": true,
+  "server_port": 8080,
+  "server_host": "localhost"
+  
+}
